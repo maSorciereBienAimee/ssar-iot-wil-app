@@ -1,0 +1,31 @@
+# Argocd will automatically detect a push on our git
+
+# To test without argocd if application is correctly configured,
+# please add the following line in a app/wil-app.ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app3-ingress
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: wil-app-service
+            port:
+              number: 8888
+
+#Then you can try :
+# k3d create mycluster
+# kubectl create namespace dev
+# kubectl -n dev apply -f app/wil-app.deployment.yaml
+# kubectl -n dev apply -f app/wil-app.service.yaml
+# kubectl -n dev apply -f app/wil-app.ingress.yaml
+#
+# Then wait for all pod ready and test in web browser : localhost:8888
+# Then you can try to change version of app in wil-app.deployment to v2, and relaunch
+# kubectl -n dev apply -f app/wil-app.deployement.yaml
+# In localhost:8888, the version of will now v2. It's exactly what argocd allow us to do automaticaly.
