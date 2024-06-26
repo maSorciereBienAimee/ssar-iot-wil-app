@@ -4,11 +4,10 @@ metadata:
   name: wil-app-service
   namespace: dev
 spec:
-  type: LoadBalancer
   selector:
     app: wil-app-label
   ports:
     - protocol: TCP
-      port: 8888
+      port: 80
       targetPort: 8888
 
